@@ -21,6 +21,11 @@
             <input type="text" id="currentPrice" placeholder="當前價格" readonly>
         </div>
 
+        <div class="input-group">
+            <label for="initialQuantity">起始買入數量：</label>
+            <input type="number" id="initialQuantity" placeholder="輸入起始買入數量">
+        </div>
+
         <!-- 動態增加多次交易的買入和賣出價格 -->
         <div id="transactionContainer">
             <div class="transaction-entry">
@@ -35,6 +40,13 @@
         <div class="input-group">
             <label for="feeRate">手續費率 (%)：</label>
             <input type="number" id="feeRate" placeholder="輸入手續費率" value="0">
+        </div>
+        <div class="input-group">
+            <label for="calculationType">計算方式：</label>
+            <select id="calculationType">
+                <option value="usdt">使用 USDT 計算</option>
+                <option value="crypto">使用幣種計算</option>
+            </select>
         </div>
         <button id="calculateBtn">計算獲利</button>
         <div class="results">

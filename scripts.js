@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const calculateBtn = document.getElementById('calculateBtn');
     const feeRateInput = document.getElementById('feeRate');
     const profitDisplay = document.getElementById('profit');
+    const calculationTypeSelect = document.getElementById('calculationType');
+    const initialQuantityInput = document.getElementById('initialQuantity');
 
     let currentPrice = 0;
     let selectedSymbol = 'BTC/USDT';
@@ -66,20 +68,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
     calculateBtn.addEventListener('click', function() {
         let totalProfit = 0;
+        let currentQuantity = parseFloat(initialQuantityInput.value); // 初始買入數量
         const feeRate = parseFloat(feeRateInput.value) / 100;
+        const calculationType = calculationTypeSelect.value;
 
         const transactionEntries = document.querySelectorAll('.transaction-entry');
         transactionEntries.forEach(entry => {
             const buyPrice = parseFloat(entry.querySelector('.buyPrice').value);
             const sellPrice = parseFloat(entry.querySelector('.sellPrice').value);
-            const quantity = 1000 / buyPrice;  // 假設每次用全部本金交易
+            const quantity = currentQuantity; // 使用當前的持有數量
 
             const buyCost = buyPrice * quantity * (1 + feeRate);
             const sellRevenue = sellPrice * quantity * (1 - feeRate);
-            totalProfit += sellRevenue - buyCost;
+            let profit = sellRevenue - buyCost;
+
+            if (calculationType === 'crypto') {
+                profit = profit / currentPrice;
+            }
+
+            totalProfit += profit;
+            currentQuantity = sellRevenue / sellPrice; // 更新持有數量
         });
 
-        profitDisplay.textContent = totalProfit.toFixed(2) + ' USDT';
+        if (calculationType === 'crypto') {
+            profitDisplay.textContent = totalProfit.toFixed(6) + ` ${selectedSymbol.split('/')[0]}`;
+        } else {
+            profitDisplay.textContent = totalProfit.toFixed(2) + ' USDT';
+        }
     });
 
     function updateSymbolSelect(symbolList) {
