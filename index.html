@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>虛擬貨幣波段交易計算器</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="calculator-container">
+        <h1>虛擬貨幣波段交易計算器</h1>
+
+        <div class="input-group">
+            <label for="cryptoSymbol">選擇交易對：</label>
+            <input type="text" id="cryptoSymbol" placeholder="輸入幣種代號 (如 BTC)">
+            <label for="cryptoSelect" style="margin-top: 10px;">預設交易對：</label>
+            <select id="cryptoSelect" size="5" style="width:100%; margin-top: 10px;"></select>
+        </div>
+        <div class="input-group">
+            <label for="currentPrice">當前價格：</label>
+            <input type="text" id="currentPrice" placeholder="當前價格" readonly>
+        </div>
+
+        <!-- 動態增加多次交易的買入和賣出價格 -->
+        <div id="transactionContainer">
+            <div class="transaction-entry">
+                <label>買入價格：</label>
+                <input type="number" class="buyPrice" placeholder="輸入買入價格">
+                <label>賣出價格：</label>
+                <input type="number" class="sellPrice" placeholder="輸入賣出價格">
+            </div>
+        </div>
+
+        <button id="addTransactionBtn">新增交易</button>
+        <div class="input-group">
+            <label for="feeRate">手續費率 (%)：</label>
+            <input type="number" id="feeRate" placeholder="輸入手續費率" value="0">
+        </div>
+        <button id="calculateBtn">計算獲利</button>
+        <div class="results">
+            <p>總獲利：<span id="profit">0</span></p>
+        </div>
+    </div>
+
+    <!-- 新增捐款資訊區塊，顯示在頁面最下端 -->
+    <div class="donation-info">
+        <p>小額捐款 使用幣安鏈(BEP20) 感謝您的捐款</p>
+        <p>地址 0x75b08718e7baa818a4e3c6cfbf059335f1d9f275</p>
+        <p>支持BTC、ETH、USDT、BNB等等幣種</p>
+        <p>Copyright © 2024 熔爐 FORGE THE MAKER 版權所有</p>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
