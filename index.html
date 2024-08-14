@@ -22,19 +22,18 @@
         </div>
 
         <div class="input-group">
-            <label for="initialQuantity">起始買入數量：</label>
-            <input type="number" id="initialQuantity" placeholder="輸入起始買入數量">
+            <label for="initialAmountType">選擇起始買入類型：</label>
+            <select id="initialAmountType">
+                <option value="usdt">使用 USDT</option>
+                <option value="crypto">使用幣種數量</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="initialAmount">起始買入量：</label>
+            <input type="number" id="initialAmount" placeholder="輸入起始買入量">
         </div>
 
-        <!-- 動態增加多次交易的買入和賣出價格 -->
-        <div id="transactionContainer">
-            <div class="transaction-entry">
-                <label>買入價格：</label>
-                <input type="number" class="buyPrice" placeholder="輸入買入價格">
-                <label>賣出價格：</label>
-                <input type="number" class="sellPrice" placeholder="輸入賣出價格">
-            </div>
-        </div>
+        <div id="transactionContainer"></div> <!-- 初始狀態下不顯示交易 -->
 
         <button id="addTransactionBtn">新增交易</button>
         <div class="input-group">
@@ -54,7 +53,6 @@
         </div>
     </div>
 
-    <!-- 新增捐款資訊區塊，顯示在頁面最下端 -->
     <div class="donation-info">
         <p>小額捐款 使用幣安鏈(BEP20) 感謝您的捐款</p>
         <p>地址 0x75b08718e7baa818a4e3c6cfbf059335f1d9f275</p>

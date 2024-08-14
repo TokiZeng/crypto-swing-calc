@@ -8,10 +8,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const feeRateInput = document.getElementById('feeRate');
     const profitDisplay = document.getElementById('profit');
     const calculationTypeSelect = document.getElementById('calculationType');
-    const initialQuantityInput = document.getElementById('initialQuantity');
+    const initialAmountTypeSelect = document.getElementById('initialAmountType');
+    const initialAmountInput = document.getElementById('initialAmount');
+    const initialAmountLabel = document.querySelector('label[for="initialAmount"]');
 
     let currentPrice = 0;
     let selectedSymbol = 'BTC/USDT';
+    let transactionCount = 1; // 初始化交易計數
 
     const defaultSymbols = ['BTC/USDT', 'ETH/USDT', 'BNB/USDT', 'TON/USDT'];
 
@@ -42,9 +45,24 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 currentPrice = parseFloat(data.price);
                 currentPriceInput.value = currentPrice.toFixed(2);
+                updateInitialAmountLabel();
             })
             .catch(error => console.error('Error fetching data:', error));
     });
+
+    initialAmountTypeSelect.addEventListener('change', function() {
+        updateInitialAmountLabel();
+    });
+
+    function updateInitialAmountLabel() {
+        const amountType = initialAmountTypeSelect.value;
+        const baseSymbol = selectedSymbol.split('/')[0];
+        if (amountType === 'crypto') {
+            initialAmountLabel.textContent = `起始${baseSymbol}數量`;
+        } else {
+            initialAmountLabel.textContent = '起始USDT數量';
+        }
+    }
 
     fetch(`https://api.binance.com/api/v3/ticker/price?symbol=${selectedSymbol.replace('/', '')}`)
         .then(response => response.json())
@@ -58,25 +76,62 @@ document.addEventListener('DOMContentLoaded', function() {
         const transactionEntry = document.createElement('div');
         transactionEntry.className = 'transaction-entry';
         transactionEntry.innerHTML = `
-            <label>買入價格：</label>
+            <label>第${transactionCount}次交易 - 買入價格：</label>
             <input type="number" class="buyPrice" placeholder="輸入買入價格">
             <label>賣出價格：</label>
             <input type="number" class="sellPrice" placeholder="輸入賣出價格">
+            <button class="removeTransactionBtn">移除</button>
         `;
         transactionContainer.appendChild(transactionEntry);
+        transactionCount++; // 新增交易後計數器增加
+        bindRemoveButtons(); // 重新綁定移除按鈕
     });
+
+    function bindRemoveButtons() {
+        const removeButtons = document.querySelectorAll('.removeTransactionBtn');
+        removeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                button.parentElement.remove();
+                updateTransactionLabels(); // 更新剩餘交易的標籤
+            });
+        });
+    }
+
+    function updateTransactionLabels() {
+        const transactionEntries = document.querySelectorAll('.transaction-entry');
+        transactionCount = 1; // 重置計數器
+        transactionEntries.forEach(entry => {
+            const labels = entry.querySelectorAll('label');
+            labels[0].textContent = `第${transactionCount}次交易 - 買入價格：`;
+            transactionCount++;
+        });
+        if (transactionEntries.length === 0) {
+            transactionCount = 1; // 如果沒有交易，將計數器重置為1
+        }
+    }
+
+    bindRemoveButtons(); // 綁定現有的移除按鈕
 
     calculateBtn.addEventListener('click', function() {
         let totalProfit = 0;
-        let currentQuantity = parseFloat(initialQuantityInput.value); // 初始買入數量
+        let currentQuantity;
+
         const feeRate = parseFloat(feeRateInput.value) / 100;
         const calculationType = calculationTypeSelect.value;
+        const initialAmountType = initialAmountTypeSelect.value;
+        const initialAmount = parseFloat(initialAmountInput.value);
+
+        if (initialAmountType === 'usdt') {
+            currentQuantity = initialAmount / currentPrice;
+        } else {
+            currentQuantity = initialAmount;
+        }
 
         const transactionEntries = document.querySelectorAll('.transaction-entry');
         transactionEntries.forEach(entry => {
             const buyPrice = parseFloat(entry.querySelector('.buyPrice').value);
             const sellPrice = parseFloat(entry.querySelector('.sellPrice').value);
-            const quantity = currentQuantity; // 使用當前的持有數量
+            const quantity = currentQuantity;
 
             const buyCost = buyPrice * quantity * (1 + feeRate);
             const sellRevenue = sellPrice * quantity * (1 - feeRate);
@@ -107,11 +162,13 @@ document.addEventListener('DOMContentLoaded', function() {
             cryptoSelect.appendChild(option);
         });
 
-        // 自動選擇第一個選項並觸發價格更新
         if (symbolList.length > 0) {
             cryptoSelect.value = symbolList[0].symbol.replace('USDT', '/USDT');
             const event = new Event('change');
             cryptoSelect.dispatchEvent(event);
         }
     }
+
+    // 初始化標籤
+    updateInitialAmountLabel();
 });

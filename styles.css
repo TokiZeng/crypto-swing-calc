@@ -3,10 +3,12 @@ body {
     background-color: #f4f4f4;
     color: #333;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    height: 100vh;
     margin: 0;
+    min-height: 100vh; /* 確保頁面最小高度 */
+    padding: 20px; /* 增加內間距確保內容不會擠到頁面邊緣 */
 }
 
 .calculator-container {
@@ -15,13 +17,25 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 600px;
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+    box-sizing: border-box;
+    overflow: visible; /* 確保新增內容時容器可以擴展 */
 }
 
 h1 {
     font-size: 24px;
     margin-bottom: 20px;
     text-align: center;
+    grid-column: span 2;
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    padding: 10px 0;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .input-group {
@@ -45,9 +59,7 @@ input[type="text"], input[type="number"], select {
 }
 
 button {
-    display: block;
-    width: 100%;
-    padding: 10px;
+    padding: 10px 20px;
     font-size: 16px;
     color: #fff;
     background-color: #007bff;
@@ -61,8 +73,52 @@ button:hover {
     background-color: #0056b3;
 }
 
+#addTransactionBtn {
+    font-size: 24px;
+    height: 40px;
+    width: 150px;
+    grid-column: span 2;
+    margin: 0 auto;
+}
+
+#transactionContainer {
+    grid-column: span 2;
+}
+
+.transaction-entry {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.transaction-entry label {
+    margin-right: 10px;
+    flex: 1 0 auto;
+}
+
+.transaction-entry input {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.transaction-entry button {
+    flex: 0 0 auto;
+    height: 40px;
+    margin-left: 10px; /* 增加按鈕與輸入框的間距 */
+}
+
 .results {
     margin-top: 20px;
     font-size: 18px;
     text-align: center;
+    grid-column: span 2;
+}
+
+.donation-info {
+    text-align: center;
+    width: 100%;
+    padding: 20px 0;
+    background-color: #f4f4f4;
+    position: relative;
+    bottom: 0;
 }
