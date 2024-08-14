@@ -47,9 +47,14 @@
                 <option value="crypto">使用幣種計算</option>
             </select>
         </div>
-        <button id="calculateBtn">計算獲利</button>
+        <button id="calculateBtn">計算利潤</button>
         <div class="results">
-            <p>總獲利：<span id="profit">0</span></p>
+            <p>成本：<span id="totalCost">0</span></p>
+            <p>總手續費：<span id="totalFee">0</span></p>
+            <p>每次交易金額及利潤：</p>
+            <ul id="individualProfits"></ul>
+            <p>總利潤：<span id="profit">0</span></p>
+            <p>總資產：<span id="totalAsset">0</span></p>
         </div>
     </div>
 

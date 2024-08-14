@@ -7,10 +7,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const calculateBtn = document.getElementById('calculateBtn');
     const feeRateInput = document.getElementById('feeRate');
     const profitDisplay = document.getElementById('profit');
+    const totalCostDisplay = document.getElementById('totalCost');
+    const totalFeeDisplay = document.getElementById('totalFee');
+    const individualProfitsList = document.getElementById('individualProfits');
     const calculationTypeSelect = document.getElementById('calculationType');
     const initialAmountTypeSelect = document.getElementById('initialAmountType');
     const initialAmountInput = document.getElementById('initialAmount');
     const initialAmountLabel = document.querySelector('label[for="initialAmount"]');
+    const totalAssetDisplay = document.getElementById('totalAsset');
 
     let currentPrice = 0;
     let selectedSymbol = 'BTC/USDT';
@@ -114,42 +118,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
     calculateBtn.addEventListener('click', function() {
         let totalProfit = 0;
+        let totalCost = parseFloat(initialAmountInput.value); // 成本為起始數量
+        let totalFee = 0;
         let currentQuantity;
+        let initialAmount = totalCost;
 
         const feeRate = parseFloat(feeRateInput.value) / 100;
-        const calculationType = calculationTypeSelect.value;
-        const initialAmountType = initialAmountTypeSelect.value;
-        const initialAmount = parseFloat(initialAmountInput.value);
-
-        if (initialAmountType === 'usdt') {
-            currentQuantity = initialAmount / currentPrice;
-        } else {
-            currentQuantity = initialAmount;
-        }
+        individualProfitsList.innerHTML = ''; // 清空先前的計算結果
 
         const transactionEntries = document.querySelectorAll('.transaction-entry');
-        transactionEntries.forEach(entry => {
+        transactionEntries.forEach((entry, index) => {
             const buyPrice = parseFloat(entry.querySelector('.buyPrice').value);
             const sellPrice = parseFloat(entry.querySelector('.sellPrice').value);
-            const quantity = currentQuantity;
 
-            const buyCost = buyPrice * quantity * (1 + feeRate);
-            const sellRevenue = sellPrice * quantity * (1 - feeRate);
-            let profit = sellRevenue - buyCost;
+            currentQuantity = initialAmount / buyPrice; // 買入的 BTC 數量
+            const buyCost = initialAmount;
+            const sellRevenue = sellPrice * currentQuantity;
+            const feeAmount = (buyCost * feeRate) + (sellRevenue * feeRate);
+            let profit = sellRevenue - buyCost - feeAmount;
 
-            if (calculationType === 'crypto') {
-                profit = profit / currentPrice;
-            }
-
+            totalFee += feeAmount;
             totalProfit += profit;
-            currentQuantity = sellRevenue / sellPrice; // 更新持有數量
+
+            // 更新下一次交易的初始資金
+            initialAmount = sellRevenue;
+
+            // 顯示每次交易的交易金額、利潤和手續費
+            const profitItem = document.createElement('li');
+            profitItem.textContent = `第${index + 1}次交易 - 交易金額：${buyCost.toFixed(2)} USDT，利潤：${profit.toFixed(2)} USDT，手續費：${feeAmount.toFixed(2)} USDT`;
+            individualProfitsList.appendChild(profitItem);
         });
 
-        if (calculationType === 'crypto') {
-            profitDisplay.textContent = totalProfit.toFixed(6) + ` ${selectedSymbol.split('/')[0]}`;
-        } else {
-            profitDisplay.textContent = totalProfit.toFixed(2) + ' USDT';
-        }
+        const totalAsset = totalCost - totalFee + totalProfit;
+
+        totalCostDisplay.textContent = totalCost.toFixed(2) + ' USDT';
+        totalFeeDisplay.textContent = totalFee.toFixed(2) + ' USDT';
+        profitDisplay.textContent = totalProfit.toFixed(2) + ' USDT';
+        totalAssetDisplay.textContent = totalAsset.toFixed(2) + ' USDT'; // 確保將結果顯示到頁面上
     });
 
     function updateSymbolSelect(symbolList) {
