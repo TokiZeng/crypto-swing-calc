@@ -110,11 +110,28 @@ button:hover {
     text-align: center;
     margin: 0 auto;
     max-width: 600px;
-    white-space: nowrap;
+    white-space: normal; /* 允許文字換行 */
+    word-wrap: break-word; /* 如果單詞太長，允許換行 */
+    word-break: break-all; /* 強制換行，無論單詞有多長 */
 }
 
 .results p {
     margin: 10px 0;
+    white-space: normal; /* 允許段落中的文字換行 */
+    word-wrap: break-word; /* 如果單詞太長，允許換行 */
+    word-break: break-all; /* 強制換行，無論單詞有多長 */
+}
+
+.results ul {
+    padding-left: 20px; /* 確保列表項目有適當的縮進 */
+    text-align: left; /* 確保列表項目左對齊以便閱讀 */
+}
+
+.results li {
+    margin-bottom: 5px;
+    white-space: normal; /* 允許列表中的文字換行 */
+    word-wrap: break-word; /* 如果單詞太長，允許換行 */
+    word-break: break-all; /* 強制換行，無論單詞有多長 */
 }
 
 .donation-info {
@@ -126,6 +143,23 @@ button:hover {
     white-space: nowrap;
 }
 
-.donation-info p {
-    margin: 5px 0;
+/* 行動裝置版樣式 */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 24px; /* 標題會隨螢幕寬度變小 */
+        text-align: center;
+    }
+
+    /* 調整圖片大小和位置 */
+    .side-image {
+        top: 160px; /* 根據行動裝置版的需求調整上下位置 */
+        right: 20px; /* 根據行動裝置版的需求調整左右位置 */
+        max-width: 150px; /* 根據行動裝置版的需求調整圖片大小 */
+        height: auto; /* 保持圖片比例 */
+    }
+
+    /* 修改起始USDT數量以下的輸入框寬度 */
+    #initialAmount, #feeRate, #calculationType, #transactionContainer input[type="number"] {
+        width: calc(38%); /* 減少20px的寬度 */
+    }
 }
