@@ -143,12 +143,15 @@ document.addEventListener('DOMContentLoaded', function() {
             // 更新下一次交易的初始資金
             initialAmount = sellRevenue;
 
+            // 根據交易次數交替應用樣式
+            const profitItemClass = (index % 2 === 0) ? 'text-red-border' : 'text-green-border';
+
             // 顯示每次交易的交易金額、利潤和手續費
             const profitItem = document.createElement('li');
-            profitItem.innerHTML = `第${index + 1}次交易 -<br>
-                                    交易金額：${buyCost.toFixed(2)} USDT<br>
-                                    利潤：${profit.toFixed(2)} USDT<br>
-                                    手續費：${feeAmount.toFixed(2)} USDT`;
+            profitItem.innerHTML = `<span class="${profitItemClass}">第${index + 1}次交易 -</span><br>
+                                    <span class="${profitItemClass}">交易金額：${buyCost.toFixed(2)} USDT</span><br>
+                                    <span class="${profitItemClass}">利潤：${profit.toFixed(2)} USDT</span><br>
+                                    <span class="${profitItemClass}">手續費：${feeAmount.toFixed(2)} USDT</span>`;
             individualProfitsList.appendChild(profitItem);
         });
 
