@@ -1,124 +1,131 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    background-color: #2c3e50;
+    color: #ecf0f1;
     margin: 0;
-    min-height: 100vh; /* 確保頁面最小高度 */
-    padding: 20px; /* 增加內間距確保內容不會擠到頁面邊緣 */
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-x: auto;
 }
 
 .calculator-container {
-    background-color: #fff;
+    background-color: #34495e;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 1200px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 20px;
-    box-sizing: border-box;
-    overflow: visible; /* 確保新增內容時容器可以擴展 */
+    color: #ecf0f1;
+    max-width: 600px;
+    margin: 0 auto;
+    overflow-x: auto;
+    position: relative;
 }
 
 h1 {
-    font-size: 24px;
+    font-size: 38px;
     margin-bottom: 20px;
+    color: #ecf0f1;
     text-align: center;
-    grid-column: span 2;
-    position: sticky;
-    top: 0;
-    background-color: #fff;
-    padding: 10px 0;
-    z-index: 10;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
 }
 
 .input-group {
     margin-bottom: 15px;
+    white-space: nowrap;
+}
+
+.input-row {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.input-item {
+    flex: 1;
+    white-space: nowrap;
 }
 
 label {
-    display: block;
-    margin-bottom: 5px;
     font-weight: bold;
+    color: #ecf0f1;
+    display: block;
+    white-space: nowrap;
 }
 
 input[type="text"], input[type="number"], select {
-    width: 100%;
     padding: 10px;
     font-size: 16px;
-    margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box;
+    background-color: #34495e;
+    color: #ecf0f1;
+    white-space: nowrap;
+}
+
+#cryptoSymbol {
+    width: 95%;
+}
+
+#cryptoSelect {
+    width: 80%;
+    margin-left: 20px;
+}
+
+.input-item:nth-child(2) label {
+    margin-left: 20px;
+}
+
+#currentPrice {
+    width: 80%;
+}
+
+/* 圖片樣式，可調整圖片位置 */
+.side-image {
+    position: absolute; 
+    top: 210px; /* 控制上下位置 */
+    right: 40px; /* 控制左右位置 */
+    max-width: 230px; /* 控制圖片的寬度，保持圖片比例 */
+    height: auto; /* 確保高度自適應以保持圖片比例 */
 }
 
 button {
     padding: 10px 20px;
     font-size: 16px;
-    color: #fff;
+    color: #ecf0f1;
     background-color: #007bff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
+    white-space: nowrap;
 }
 
 button:hover {
     background-color: #0056b3;
 }
 
-#addTransactionBtn {
-    font-size: 24px;
-    height: 40px;
-    width: 150px;
-    grid-column: span 2;
-    margin: 0 auto;
-}
-
-#transactionContainer {
-    grid-column: span 2;
-}
-
-.transaction-entry {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.transaction-entry label {
-    margin-right: 10px;
-    flex: 1 0 auto;
-}
-
-.transaction-entry input {
-    flex: 1;
-    margin-right: 10px;
-}
-
-.transaction-entry button {
-    flex: 0 0 auto;
-    height: 40px;
-    margin-left: 10px; /* 增加按鈕與輸入框的間距 */
-}
-
 .results {
     margin-top: 20px;
     font-size: 18px;
+    color: #ecf0f1;
     text-align: center;
-    grid-column: span 2;
+    margin: 0 auto;
+    max-width: 600px;
+    white-space: nowrap;
+}
+
+.results p {
+    margin: 10px 0;
 }
 
 .donation-info {
+    margin-top: auto;
     text-align: center;
-    width: 100%;
+    color: #ecf0f1;
     padding: 20px 0;
-    background-color: #f4f4f4;
-    position: relative;
-    bottom: 0;
+    background-color: #2c3e50;
+    white-space: nowrap;
+}
+
+.donation-info p {
+    margin: 5px 0;
 }

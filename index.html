@@ -10,16 +10,23 @@
     <div class="calculator-container">
         <h1>虛擬貨幣波段交易計算器</h1>
 
-        <div class="input-group">
-            <label for="cryptoSymbol">選擇交易對：</label>
-            <input type="text" id="cryptoSymbol" placeholder="輸入幣種代號 (如 BTC)">
-            <label for="cryptoSelect" style="margin-top: 10px;">預設交易對：</label>
-            <select id="cryptoSelect" size="5" style="width:100%; margin-top: 10px;"></select>
+        <div class="input-group input-row">
+            <div class="input-item">
+                <label for="cryptoSymbol">選擇交易對：</label>
+                <input type="text" id="cryptoSymbol" placeholder="輸入幣種代號 (如 BTC)">
+            </div>
+            <div class="input-item">
+                <label for="cryptoSelect">預設交易對：</label>
+                <select id="cryptoSelect" size="1"></select>
+            </div>
+            <div class="input-item">
+                <label for="currentPrice">當前價格：</label>
+                <input type="text" id="currentPrice" placeholder="當前價格" readonly>
+            </div>
         </div>
-        <div class="input-group">
-            <label for="currentPrice">當前價格：</label>
-            <input type="text" id="currentPrice" placeholder="當前價格" readonly>
-        </div>
+
+        <!-- 插入圖片 -->
+        <img src="BTCETH.png" alt="描述圖片" class="side-image">
 
         <div class="input-group">
             <label for="initialAmountType">選擇起始買入類型：</label>
