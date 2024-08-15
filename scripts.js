@@ -145,7 +145,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // 顯示每次交易的交易金額、利潤和手續費
             const profitItem = document.createElement('li');
-            profitItem.textContent = `第${index + 1}次交易 - 交易金額：${buyCost.toFixed(2)} USDT，利潤：${profit.toFixed(2)} USDT，手續費：${feeAmount.toFixed(2)} USDT`;
+            profitItem.innerHTML = `第${index + 1}次交易 -<br>
+                                    交易金額：${buyCost.toFixed(2)} USDT<br>
+                                    利潤：${profit.toFixed(2)} USDT<br>
+                                    手續費：${feeAmount.toFixed(2)} USDT`;
             individualProfitsList.appendChild(profitItem);
         });
 
